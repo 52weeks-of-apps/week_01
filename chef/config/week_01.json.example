@@ -1,0 +1,45 @@
+{
+  "applications": {
+    "week_01": {
+        "migration_command": "rake db:migrate",
+        "deploy_action": "deploy",
+        "framework_env": "production",
+        "user": "deploy",
+        "branch": "master",
+        "repository_name": "git@github.com:52weeks-of-apps/week_01.git",
+        "run_migrations": true,
+        "run_deploy": true
+    }
+  },
+
+  "users": { 
+    "trotter": {
+      "sudo": true,
+      "password": "TODO: A SHADOW PASS GOES HERE",
+      "ssh_key": "TODO: YOUR SSH KEY GOES HERE"
+    } 
+  },
+
+  "ssh": {
+    "port": 3221 // TODO: SPECIFY A NEW SSH PORT
+  },
+
+  "mysql": {
+    "server_root_password": "abcd1234" // TODO: SPECIFY A MYSQL PASSWORD
+  },
+
+  "apache": {
+    "contact": "example@example.com" // TODO: ADD YOUR APACHE CONTACT
+  },
+
+  "iptables": {
+    "tcp_ports": [80, 443]
+  },
+
+  "recipes": [ "ruby", 
+               "iptables",
+               "sshd",
+               "mysql::server",
+               "week_01",
+               "administrators" ]
+}

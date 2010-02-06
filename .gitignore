@@ -3,3 +3,4 @@ db/*.sqlite3
 log/*.log
 tmp/**/*
 db/schema.rb
+chef/config/week_01.json
