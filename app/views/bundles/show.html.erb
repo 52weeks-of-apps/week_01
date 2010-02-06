@@ -1,1 +1,2 @@
-<%= @bundle.body %>
+<% raw html_escape(@bundle.body).gsub(/\n/, '<br />') %>
+
