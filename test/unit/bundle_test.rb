@@ -14,6 +14,25 @@ class BundleTest < ActiveSupport::TestCase
     assert !@bundle.valid?
   end
 
+  test "url must be unique" do
+    @bundle.url = bundles(:localhost).url
+    assert !@bundle.valid?
+  end
+
+  test "should update cache_until when fetching body" do
+    @bundle.update_body!
+    assert_not_nil @bundle.cache_until
+    assert @bundle.cache_until > 23.hours.from_now
+  end
+
+  test "should not update body if still cached" do
+    @bundle.update_body!
+    body = @bundle.body
+    Typhoeus::Response.response_bodies[@bundle.url] = body + "woah! new stuff!"
+    @bundle.update_body!
+    assert_equal body, @bundle.body
+  end
+
   test "fetching url" do
     assert_nil @bundle.body
     @bundle.update_body!

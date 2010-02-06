@@ -2,13 +2,17 @@ class Bundle < ActiveRecord::Base
   before_save :update_body!
 
   validates_presence_of :url
+  validates_uniqueness_of :url
 
   def update_body!
+    return if cache_until && cache_until > Time.now
+
     response = Typhoeus::Request.get(url)
     doc = Nokogiri::HTML(response.body)
     replace_scripts!(doc)
     replace_stylesheets!(doc)
     self.body = doc.to_s
+    self.cache_until = 1.day.from_now
   end
 
   private
