@@ -8,6 +8,7 @@ gem "rails", "3.0.0.beta"
 # gem "rails", :git => "git://github.com/rails/rails.git"
 
 gem "mysql"
+gem "typhoeus"
 
 ## Bundle the gems you use:
 # gem "bj"
