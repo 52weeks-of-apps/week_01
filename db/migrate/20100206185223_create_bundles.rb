@@ -2,7 +2,7 @@ class CreateBundles < ActiveRecord::Migration
   def self.up
     create_table :bundles do |t|
       t.string :url, :limit => 1000
-      t.text :body
+      t.column :body, :longtext
       t.datetime :cache_until
 
       t.timestamps
