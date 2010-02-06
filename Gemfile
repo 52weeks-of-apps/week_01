@@ -9,6 +9,7 @@ gem "rails", "3.0.0.beta"
 
 gem "mysql"
 gem "typhoeus"
+gem "nokogiri"
 
 ## Bundle the gems you use:
 # gem "bj"

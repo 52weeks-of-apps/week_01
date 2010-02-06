@@ -1,25 +1,21 @@
 module Typhoeus
   class Request
     def self.get(url)
-      return Response.new
+      return Response.new(url)
     end
   end
 
   class Response
     attr_reader :body
 
-    @response_body = "some body"
+    @response_bodies = Hash.new("<html></html>")
 
-    def self.response_body
-      @response_body
+    def self.response_bodies
+      @response_bodies
     end
 
-    def self.response_body=(str)
-      @response_body = str
-    end
-
-    def initialize
-      @body = self.class.response_body
+    def initialize(url)
+      @body = self.class.response_bodies[url]
     end
   end
 end
