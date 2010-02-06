@@ -1,11 +1,7 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  url: MyString
-  body: MyText
-  cache_until: 2010-02-06 13:52:23
+localhost:
+  url: "http://localhost/"
+  body: "<html><body>Hi</body></html>"
+  cache_until: <%= 1.day.from_now %>
 
-two:
-  url: MyString
-  body: MyText
-  cache_until: 2010-02-06 13:52:23

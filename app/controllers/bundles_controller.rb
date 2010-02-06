@@ -1,5 +1,10 @@
 class BundlesController < ApplicationController
   def create
-    render :text => "You sent me #{params[:bundle][:url]}. Thanks!"
+    @bundle = Bundle.create!(params[:bundle])
+    redirect_to bundle_url(@bundle)
+  end
+
+  def show
+    @bundle = Bundle.find(params[:id])
   end
 end
