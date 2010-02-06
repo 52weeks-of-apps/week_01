@@ -1,4 +1,6 @@
 Week01::Application.routes.draw do |map|
+  resources :bundles
+  root :to => "landing#root"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -50,7 +52,6 @@ Week01::Application.routes.draw do |map|
   # just remember to delete public/index.html.
   # root :to => "welcome#index"
 
-  root :to => "landing#root"
   # See how all your routes lay out with "rake routes"
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.

@@ -1,3 +1,6 @@
 <h1>Enter a url to get started:</h1>
-<%= text_field_tag 'url' %>
-<%= submit_tag 'Go' %>
+<% form_for @bundle do |f| %>
+  <%= f.label :url, "Enter a url to get started:" %><br />
+  <%= f.text_field :url %>
+  <%= submit_tag 'Go' %>
+<% end %>
