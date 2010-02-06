@@ -11,6 +11,8 @@ gem "mysql"
 gem "typhoeus"
 gem "nokogiri"
 
+gem 'ruby-debug', :group => [:test, :development]
+
 ## Bundle the gems you use:
 # gem "bj"
 # gem "hpricot", "0.6"
