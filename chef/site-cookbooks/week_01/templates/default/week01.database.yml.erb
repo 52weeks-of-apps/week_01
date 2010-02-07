@@ -1,0 +1,29 @@
+development:
+  adapter: mysql
+  encoding: utf8
+  reconnect: false
+  database: week_01_development
+  pool: 5
+  username: root
+  password: <%= @password %>
+  socket: /tmp/mysql.sock
+
+test:
+  adapter: mysql
+  encoding: utf8
+  reconnect: false
+  database: week_01_test
+  pool: 5
+  username: root
+  password: <%= @password %>
+  socket: /tmp/mysql.sock
+
+production:
+  adapter: mysql
+  encoding: utf8
+  reconnect: false
+  database: week_01_production
+  pool: 5
+  username: root
+  password: <%= @password %>
+  socket: /tmp/mysql.sock

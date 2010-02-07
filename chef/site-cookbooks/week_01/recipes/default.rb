@@ -21,16 +21,18 @@ include_recipe "git"
 include_recipe "rails"
 include_recipe "passenger_apache2::mod_rails"
 
-web_app "week_01" do
-  cookbook "passenger_apache2"
-  docroot "/srv/week_01/current/public"
-  server_name "week01.52weeksofapps.com"
-  server_aliases ["week01"]
-  rails_env "production"
-end
-
 node[:applications].each_pair do |app, data|
   next unless data[:run_deploy]
+
+  root_dir = "/srv/#{app}"
+
+  web_app app do
+    cookbook "passenger_apache2"
+    docroot "#{root_dir}/current/public"
+    server_name data[:domain]
+    server_aliases [app]
+    rails_env data[:framework_env]
+  end
 
   user data[:user] do
     comment  "Deploy user for #{app}"
@@ -62,14 +64,14 @@ node[:applications].each_pair do |app, data|
     action :create
   end
 
-  directory "/srv/scribble_mail" do
+  directory root_dir do
     owner "deploy"
     group "users"
     mode "0755"
     action :create
   end
 
-  deploy "/srv/scribble_mail" do
+  deploy root_dir do
     repo              data[:repository_name]
     revision          data[:revision]
     user              data[:user]
@@ -81,30 +83,30 @@ node[:applications].each_pair do |app, data|
     shallow_clone     true
 
     before_migrate do
-      directory "/srv/scribble_mail/shared/config" do
+      directory "#{root_dir}/shared/config" do
         owner "deploy"
         group "users"
         mode "0755"
         action :create
       end
 
-      directory "/srv/scribble_mail/shared/log" do
+      directory "#{root_dir}/shared/log" do
         owner "deploy"
         group "users"
         mode "0755"
         action :create
       end
 
-      template "/srv/scribble_mail/shared/config/database.yml" do
-        source    "scribble_mail.database.yml.erb"
+      template "#{root_dir}/shared/config/database.yml" do
+        source    "#{app}.database.yml.erb"
         variables :password => node[:mysql][:server_root_password]
         owner     data[:user]
         mode      "0644"
         action    :create
       end
 
-      template "/srv/scribble_mail/shared/cached-copy/config/database.yml" do
-        source    "scribble_mail.database.yml.erb"
+      template "#{root_dir}/shared/cached-copy/config/database.yml" do
+        source    "#{app}.database.yml.erb"
         variables :password => node[:mysql][:server_root_password]
         owner     data[:user]
         mode      "0644"
@@ -112,7 +114,7 @@ node[:applications].each_pair do |app, data|
       end
 
       execute "create-database" do
-        command "cd /srv/scribble_mail/shared/cached-copy/config; rake db:create RAILS_ENV=#{data[:framework_env]}"
+        command "cd #{root_dir}/shared/cached-copy/config; rake db:create RAILS_ENV=#{data[:framework_env]}"
       end
     end
   end
